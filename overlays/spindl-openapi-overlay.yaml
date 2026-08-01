@@ -1,0 +1,27 @@
+overlay: 1.0.0
+x-generated: '2026-07-21'
+x-method: generated
+info:
+  title: API Evangelist enhancements for Spindl Server-to-Server API
+  version: 1.0.0
+extends: openapi/spindl-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: true
+      x-api-evangelist-category: web3-attribution-analytics
+  - target: $.info
+    update:
+      x-authentication: authentication/spindl-authentication.yml
+      x-error-catalog: errors/spindl-problem-types.yml
+      x-conventions: conventions/spindl-conventions.yml
+      x-data-model: data-model/spindl-data-model.yml
+  - target: $.paths['/links'].get
+    update:
+      x-agent-note: >-
+        Read-only listing; safe for agents to call to enumerate campaign links.
+  - target: $.paths['/events/server'].post
+    update:
+      x-agent-note: >-
+        Write operation with no idempotency key; retries may duplicate events.
+        Batch events into a single array call rather than retrying individually.

@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.spindl.xyz/spindl/techncial/javascript-sdk-html-script-guide/install.md
+packages:
+  - language: javascript
+    registry: npm
+    name: "@spindl-xyz/attribution"
+    version: 1.8.1
+    url: https://www.npmjs.com/package/@spindl-xyz/attribution
+    install: npm install @spindl-xyz/attribution
+    repository: https://github.com/spindl-xyz/sdk
+    description: Spindl Web3 Attribution SDK (default) for browser and Node sessions.
+    license: MIT
+    official: true
+  - language: javascript
+    registry: npm
+    name: "@spindl-xyz/attribution-lite"
+    version: 1.8.1
+    url: https://www.npmjs.com/package/@spindl-xyz/attribution-lite
+    install: npm install @spindl-xyz/attribution-lite
+    description: Lightweight (Lite) build of the Spindl attribution SDK.
+    license: MIT
+    official: true
+  - language: swift
+    registry: swift-package-manager
+    name: SpindlSDK
+    url: https://github.com/spindl-xyz/spindl-ios
+    install: "Add Swift Package: https://github.com/spindl-xyz/spindl-ios (min v1.0.1)"
+    repository: https://github.com/spindl-xyz/spindl-ios
+    description: Spindl iOS (Swift) SDK, distributed via Swift Package Manager.
+    official: true
+  - language: kotlin
+    registry: maven
+    name: "xyz.spindl:sdk"
+    group: xyz.spindl
+    artifact: sdk
+    url: https://docs.spindl.xyz/spindl/techncial/android-sdk.md
+    install: "implementation 'xyz.spindl:sdk:<latest>'"
+    description: Spindl Android SDK, published under the xyz.spindl group.
+    official: true

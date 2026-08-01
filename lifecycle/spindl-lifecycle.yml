@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: derived
+source: https://docs.spindl.xyz/spindl/techncial/api.md
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.spindl.xyz/spindl/techncial/api.md
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >-
+  Spindl publishes no separate versioning/deprecation policy, SLA, or public
+  status page as of this pass. The API is versioned in the path (/v1/). No
+  StatusPage or Deprecation pointer emitted (nothing published to point to).

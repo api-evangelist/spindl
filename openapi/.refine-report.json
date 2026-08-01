@@ -1,0 +1,16 @@
+{
+  "provider": "spindl",
+  "sources": [
+    "spindl-events-api-openapi.yml",
+    "spindl-short-links-api-openapi.yml"
+  ],
+  "outputs": [
+    "spindl-events-api-openapi.yml",
+    "spindl-short-links-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

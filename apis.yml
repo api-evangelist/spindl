@@ -1,8 +1,29 @@
 aid: spindl
 name: Spindl
-description: 'Spindl is a company surfaced as a portfolio company of multicoin-capital and added to the
-  API Evangelist network as a stub for enrichment. Sector: crypto-web3. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Spindl is a Web3 growth platform providing onchain attribution, web3-native
+  analytics, audiences, short links, referrals, and ads in one place, helping
+  developers understand where their users come from and how they behave across
+  onchain apps. It offers a JavaScript/HTML SDK, Android and iOS SDKs, and a
+  Server-to-Server REST API for campaign and attribution management, short
+  (redirect) links, server-side custom event ingestion, and daily data exports.
+  Positioned as Web3's answer to Mixpanel and Amplitude, Spindl is used by teams
+  including Uniswap, Base, Safe, and Morpho. Originally added to the API
+  Evangelist network as a portfolio-lead stub, now enriched from its published
+  developer documentation.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://spindl.xyz/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/spindl/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,16 +33,91 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v1
 tags:
 - Company
 - Crypto Web3
-apis: []
+- Attribution
+- Analytics
+- Marketing
+- Growth
+- SDK
+- Web3
+apis:
+- aid: spindl:spindl-events-api
+  name: Spindl Events API
+  description: Server-side custom event ingestion for attribution.
+  humanURL: https://docs.spindl.xyz/spindl/techncial/api.md
+  baseURL: https://api.spindl.xyz/v1
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/spindl-events-api-openapi.yml
+  - type: APIReference
+    url: https://docs.spindl.xyz/spindl/techncial/api.md
+- aid: spindl:spindl-short-links-api
+  name: Spindl Short Links API
+  description: Redirect links mapping a Spindl link to a destination URL.
+  humanURL: https://docs.spindl.xyz/spindl/techncial/api.md
+  baseURL: https://api.spindl.xyz/v1
+  tags:
+  - Short Links
+  properties:
+  - type: OpenAPI
+    url: openapi/spindl-short-links-api-openapi.yml
+  - type: APIReference
+    url: https://docs.spindl.xyz/spindl/techncial/api.md
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/spindl-domain-security.yml
+- type: Authentication
+  url: authentication/spindl-authentication.yml
+- type: Packages
+  url: packages/spindl-packages.yml
+- type: SDKs
+  url: packages/spindl-packages.yml
+- type: MCPServer
+  url: mcp/spindl-mcp.yml
+- type: LLMsTxt
+  url: llms/spindl-llms.txt
+- type: Conventions
+  url: conventions/spindl-conventions.yml
+- type: ErrorCatalog
+  url: errors/spindl-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/spindl-lifecycle.yml
+- type: Conformance
+  url: conformance/spindl-conformance.yml
+- type: DataModel
+  url: data-model/spindl-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
 - type: Website
   url: https://spindl.xyz
+- type: DeveloperPortal
+  url: https://docs.spindl.xyz
+- type: Documentation
+  url: https://docs.spindl.xyz
+- type: GettingStarted
+  url: https://docs.spindl.xyz/spindl/techncial/start-here.md
+- type: Blog
+  url: https://blog.spindl.xyz
+- type: GitHubOrganization
+  url: https://github.com/spindl-xyz
+- type: SignUp
+  url: https://app.spindl.xyz
+- type: Support
+  url: https://docs.spindl.xyz/spindl/contact-spindl.md
+- type: PrivacyPolicy
+  url: https://spindl.xyz/privacy-policy

@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/spindl-openapi.yml
+entities:
+  - name: Link
+    description: A short (redirect) link mapping a Spindl link to a destination URL.
+    id_field: id
+    id_format: uuid
+    fields: [id, name, link, redirectUrl, createdAt, totalVisits, latestVisit]
+  - name: CustomEvent
+    description: A server-ingested attribution event tied to a user identity.
+    fields: [type, data.name, data.properties, identity.address, identity.customerUserId]
+  - name: Identity
+    description: >-
+      The user a CustomEvent is attributed to, resolved by wallet address
+      and/or a customerUserId.
+    fields: [address, customerUserId]
+relationships:
+  - from: CustomEvent
+    to: Identity
+    kind: belongs_to
+    via: identity
+  - from: Link
+    to: CustomEvent
+    kind: has_many
+    via: attribution
+    notes: >-
+      Derived/semantic: link visits generate downstream attribution events;
+      not a hard foreign key in the public API schema.

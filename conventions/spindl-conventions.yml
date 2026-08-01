@@ -1,0 +1,36 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.spindl.xyz/spindl/techncial/api.md
+authentication:
+  style: api-key
+  header: X-API-Key
+  notes: >-
+    Server-to-Server API key (distinct from client-side SDK key). Generated on
+    the Settings page in the Spindl app. Keys can be revoked from Settings.
+  docs: https://docs.spindl.xyz/spindl/your-spindl-app-setup.md
+idempotency:
+  supported: false
+  notes: >-
+    No idempotency-key header is documented. Custom events are ingested as
+    batched arrays; retrying a failed POST may duplicate events.
+pagination:
+  supported: false
+  notes: The list-links endpoint returns the full set sorted by createdAt descending.
+versioning:
+  style: uri-path
+  current: v1
+error_envelope:
+  shape: custom-json
+  fields: [statusCode, message]
+  ref: errors/spindl-problem-types.yml
+identity_stitching:
+  notes: >-
+    Events and attribution identify users by either a wallet `address` or a
+    `customerUserId` (e.g. email or internal user id). At least one is required
+    per event; supplying both improves identity stitching and attribution.
+rate_limiting:
+  signaled: unknown
+  notes: No rate-limit headers or limits documented in the public API reference.
+hosts:
+  management_api: https://api.spindl.xyz/v1
+  events_ingestion: https://spindl.link/events/server

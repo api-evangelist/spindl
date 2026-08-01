@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+source: https://docs.spindl.xyz/spindl/techncial/api.md
+format: custom-json
+envelope:
+  description: >-
+    On error responses Spindl returns a JSON body with a numeric statusCode and
+    a human-readable message. This is NOT RFC 9457 application/problem+json.
+  fields:
+    statusCode: HTTP status code (integer)
+    message: Human-readable error message (string)
+  example:
+    statusCode: 404
+    message: link not found
+classes:
+  - range: 2xx
+    meaning: Success.
+  - range: 4xx
+    meaning: Incorrect or incomplete request (e.g. a required parameter was omitted).
+  - range: 5xx
+    meaning: An error occurred on Spindl's servers.
+problems:
+  - status: 400
+    title: Bad request
+    detail: Incorrect or incomplete request; a required parameter was omitted or invalid.
+    source_operation: openapi/spindl-openapi.yml#createLink
+  - status: 401
+    title: Unauthorized
+    detail: Missing or invalid X-API-Key.
+    source_operation: openapi/spindl-openapi.yml#listLinks
+  - status: 404
+    title: Not found
+    detail: The requested resource (e.g. link) does not exist.
+    example_message: link not found
+  - status: 500
+    title: Server error
+    detail: An error occurred on Spindl's servers.

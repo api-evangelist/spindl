@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/spindl-openapi.yml
+status: candidate
+notes: >-
+  No official hosted/remote Spindl MCP server was found (searched docs.spindl.xyz,
+  npm @modelcontextprotocol, and MCP registries). The tools below are a candidate
+  list derived one-per-operation from Spindl's documented Server-to-Server API.
+server:
+  name: spindl
+  transport: http
+tools:
+  - name: list_links
+    description: Get all short (redirect) links for your organization, sorted by created time descending.
+    source_operation: openapi/spindl-openapi.yml#listLinks
+  - name: create_link
+    description: Create a new short link with Spindl tracking (name + destination url).
+    source_operation: openapi/spindl-openapi.yml#createLink
+  - name: send_custom_events
+    description: Ingest one or more custom attribution events server-side (identified by wallet address or customerUserId).
+    source_operation: openapi/spindl-openapi.yml#sendCustomEvents

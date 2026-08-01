@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/spindl-openapi.yml
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: API uses a static X-API-Key header, no OAuth2 flows declared.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a custom JSON envelope {statusCode, message}, not
+      application/problem+json.
+  - id: api-key-header-auth
+    conforms: true
+    evidence: X-API-Key request header documented and used across all endpoints.
+  - id: rest-json
+    conforms: true
+    evidence: Resource-oriented JSON over HTTPS with standard 2xx/4xx/5xx status codes.
+  - id: uri-path-versioning
+    conforms: true
+    evidence: Management API is versioned in the path (/v1/).
+  - id: idempotency-keys
+    conforms: false
+    evidence: No idempotency-key header documented for write operations.
+  - id: pagination
+    conforms: false
+    evidence: List links endpoint returns the full set with no documented pagination parameters.

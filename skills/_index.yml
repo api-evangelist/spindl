@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/spindl-openapi.yml
+skills:
+  - file: spindl-create-tracking-link.md
+    name: Create and list Spindl tracking links
+    api: openapi/spindl-openapi.yml
+    operations: [createLink, listLinks]
+  - file: spindl-send-custom-events.md
+    name: Send server-side custom events to Spindl
+    api: openapi/spindl-openapi.yml
+    operations: [sendCustomEvents]
