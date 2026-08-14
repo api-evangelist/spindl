@@ -8,9 +8,13 @@ description: >-
   Server-to-Server REST API for campaign and attribution management, short
   (redirect) links, server-side custom event ingestion, and daily data exports.
   Positioned as Web3's answer to Mixpanel and Amplitude, Spindl is used by teams
-  including Uniswap, Base, Safe, and Morpho. Originally added to the API
-  Evangelist network as a portfolio-lead stub, now enriched from its published
-  developer documentation.
+  including Uniswap, Base, Safe, and Morpho. A separate publisher-facing Ads
+  API on e.spindlembed.com serves targeted onchain ad recommendations and
+  records impressions and clicks, with a React BannerEmbed component and a
+  hosted iframe as no-code alternatives. Spindl announced in January 2025 that
+  it was joining Coinbase and now operates as a product team inside Base.
+  Originally added to the API Evangelist network as a portfolio-lead stub, now
+  enriched from its published developer documentation and live host probes.
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -33,11 +37,11 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 14
+  artifacts_added: 8
   pass: local-v1
 tags:
 - Company
@@ -52,7 +56,7 @@ apis:
 - aid: spindl:spindl-events-api
   name: Spindl Events API
   description: Server-side custom event ingestion for attribution.
-  humanURL: https://docs.spindl.xyz/spindl/techncial/api.md
+  humanURL: https://docs.spindl.xyz/technical/api/custom-events-api
   baseURL: https://api.spindl.xyz/v1
   tags:
   - Events
@@ -60,11 +64,11 @@ apis:
   - type: OpenAPI
     url: openapi/spindl-events-api-openapi.yml
   - type: APIReference
-    url: https://docs.spindl.xyz/spindl/techncial/api.md
+    url: https://docs.spindl.xyz/technical/api/custom-events-api
 - aid: spindl:spindl-short-links-api
   name: Spindl Short Links API
   description: Redirect links mapping a Spindl link to a destination URL.
-  humanURL: https://docs.spindl.xyz/spindl/techncial/api.md
+  humanURL: https://docs.spindl.xyz/technical/api/short-links
   baseURL: https://api.spindl.xyz/v1
   tags:
   - Short Links
@@ -72,7 +76,30 @@ apis:
   - type: OpenAPI
     url: openapi/spindl-short-links-api-openapi.yml
   - type: APIReference
-    url: https://docs.spindl.xyz/spindl/techncial/api.md
+    url: https://docs.spindl.xyz/technical/api/short-links
+- aid: spindl:spindl-ads-api
+  name: Spindl Ads API
+  description: >-
+    Publisher-facing onchain advertising API. Fetch targeted ad recommendations
+    for a wallet address at a named placement, render the returned unit, and
+    post impressions and clicks back to Spindl. Also serves a hosted iframe ad
+    unit for direct embedding. Documented on Spindl's own docs host and backed
+    by Spindl's own @spindl-xyz/embed-react component.
+  humanURL: https://docs.spindl.xyz/ads/start-here
+  baseURL: https://e.spindlembed.com/v1
+  tags:
+  - Ads
+  - Advertising
+  - Onchain
+  properties:
+  - type: OpenAPI
+    url: openapi/spindl-ads-api-openapi.yml
+  - type: APIReference
+    url: https://docs.spindl.xyz/ads/start-here
+  - type: Overlay
+    url: overlays/spindl-ads-api-overlay.yaml
+  - type: Components
+    url: components/spindl-components.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -105,6 +132,12 @@ common:
   url: data-model/spindl-data-model.yml
 - type: AgentSkill
   url: skills/_index.yml
+- type: Components
+  url: components/spindl-components.yml
+- type: Plans
+  url: plans/spindl-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/spindl-rate-limits.yml
 - type: Website
   url: https://spindl.xyz
 - type: DeveloperPortal
@@ -112,7 +145,7 @@ common:
 - type: Documentation
   url: https://docs.spindl.xyz
 - type: GettingStarted
-  url: https://docs.spindl.xyz/spindl/techncial/start-here.md
+  url: https://docs.spindl.xyz/technical/start-here
 - type: Blog
   url: https://blog.spindl.xyz
 - type: GitHubOrganization
@@ -120,6 +153,6 @@ common:
 - type: SignUp
   url: https://app.spindl.xyz
 - type: Support
-  url: https://docs.spindl.xyz/spindl/contact-spindl.md
+  url: https://docs.spindl.xyz/contact-spindl
 - type: PrivacyPolicy
   url: https://spindl.xyz/privacy-policy
