@@ -1,0 +1,66 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.spindl.xyz/ads/start-here
+note: >-
+  Spindl ships client-side embeddable ad units, distinct from its server-side
+  and mobile analytics SDKs in packages/. Two of the three documented Ads
+  integration paths are embedded components rather than API calls.
+families:
+- name: Ad embeds
+  description: >-
+    Prebuilt, publisher-facing ad units rendered inside a host application.
+    Both variants need a publisher_id and placement_id issued by the Spindl
+    team from the Placements tab, and both render nothing when no ad is
+    available.
+  components:
+  - name: BannerEmbed
+    kind: react-component
+    package: "@spindl-xyz/embed-react"
+    registry: npm
+    version: 1.0.0
+    published: '2024-02-28'
+    install: npm i @spindl-xyz/embed-react
+    url: https://www.npmjs.com/package/@spindl-xyz/embed-react
+    repository: https://github.com/spindl-xyz/spindl-react-embed
+    license: MIT
+    renders: iframe
+    props:
+      required: [publisherId, placementId]
+      optional: [address, properties, style]
+    notes: >-
+      `address` accepts a single wallet address or an array; `properties`
+      accepts a JSON blob (e.g. chain_id) for better targeting; `style` targets
+      the returned iframe tag and should set width/height. Peer-depends on
+      react only, with no production dependencies.
+    docs: https://docs.spindl.xyz/ads/start-here
+  - name: Hosted iFrame ad unit
+    kind: hosted-iframe
+    src: https://e.spindlembed.com/v1/serve
+    params:
+      required: [publisher_id, placement_id]
+      optional: [address]
+    example: >-
+      <iframe width="800" height="400"
+      src="https://e.spindlembed.com/v1/serve?publisher_id=my_website&placement_id=article_sidebar&address=0xSpindl"></iframe>
+    notes: >-
+      Documented as an unauthenticated iframe src — no publisher API key is
+      sent from the browser. Backed by the serveAdIframe operation in
+      openapi/spindl-ads-api-openapi.yml.
+    docs: https://docs.spindl.xyz/ads/start-here
+- name: Attribution script tag
+  description: >-
+    The browser attribution SDK is also distributed as a CDN script tag with a
+    Subresource Integrity hash, which Spindl documents as the recommended
+    hardened install for sites that do not use npm.
+  components:
+  - name: spindl-sdk script tag
+    kind: script-tag
+    src: https://cdn.spindl.xyz/attribution-1-8-1.js
+    version: 1.8.1
+    integrity: sha512-tnVaWexFbVZtEVlUBUMiWPwusxycBB3aDONgxC2zjX4CE0Tleo0zoLyI/JA6svx9SumV3KHGtAiD1mDrR+TpPg==
+    attributes: [data-key, data-name, integrity, crossorigin, async]
+    notes: >-
+      Version-pinned in the URL itself; Spindl documents self-hosting the file
+      as the higher-security option. Cross-referenced in
+      packages/spindl-packages.yml as the cdn-registry entry.
+    docs: https://docs.spindl.xyz/technical/javascript-sdk-html-script-guide/security

@@ -1,12 +1,44 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/spindl-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/spindl-ads-api-openapi.yml, openapi/spindl-events-api-openapi.yml, openapi/spindl-short-links-api-openapi.yml
+docs: https://docs.spindl.xyz/technical/api
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  credential_count: 3
+  note: >-
+    Spindl issues THREE distinct credentials, all from the Settings screen of
+    the Spindl app, and they are not interchangeable: the Server-to-Server API
+    key (X-API-Key), the Publisher API Token (X-API-ACCESS-KEY) for the Ads
+    API, and the client-side SDK Key used by the browser and mobile SDKs. Only
+    the first two are HTTP request credentials and appear in schemes[] below.
+    Server keys are revocable from Settings by clicking the X beside the token.
+    No OAuth2, OIDC or mutualTLS is offered — /.well-known/openid-configuration
+    and /.well-known/oauth-authorization-server miss on every host, so no
+    scopes/ artifact is emitted.
+client_credentials:
+- name: SDK Key
+  used_by: [browser JS SDK, HTML script tag, Android SDK, iOS SDK]
+  transport: >-
+    Config value (`sdkKey`) or `data-key` script attribute — not an HTTP header
+  public: true
+  docs: https://docs.spindl.xyz/technical/javascript-sdk-html-script-guide/install
+  note: >-
+    Public by nature since it ships in client code. Spindl's hardening guidance
+    for it is version pinning and Subresource Integrity rather than secrecy —
+    see https://docs.spindl.xyz/technical/javascript-sdk-html-script-guide/security
 schemes:
+- name: PublisherApiKey
+  type: apiKey
+  in: header
+  parameter: X-API-ACCESS-KEY
+  description: Publisher API Token generated on the Settings screen in the Spindl app. Distinct
+    from the Server-to-Server X-API-Key and from the client-side SDK key. Must be treated as
+    a secret and never shipped in public-facing code.
+  sources:
+  - openapi/spindl-ads-api-openapi.yml
 - name: ApiKeyAuth
   type: apiKey
   in: header
@@ -14,4 +46,5 @@ schemes:
   description: Server-to-Server API key generated on the Settings page in the Spindl app (https://app.spindl.xyz/settings).
     Distinct from the client-side SDK key.
   sources:
-  - openapi/spindl-openapi.yml
+  - openapi/spindl-events-api-openapi.yml
+  - openapi/spindl-short-links-api-openapi.yml

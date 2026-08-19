@@ -1,40 +1,124 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://docs.spindl.xyz/spindl/techncial/javascript-sdk-html-script-guide/install.md
+source: https://docs.spindl.xyz/technical/javascript-sdk-html-script-guide/install
+note: >-
+  Versions and publish dates read from the registry metadata endpoints
+  (registry.npmjs.org, search.maven.org, the GitHub releases API) and from the
+  version pinned in the CDN URL, on 2026-08-13. Every first-party Spindl
+  package is stale: the newest release of anything is 2025-01-09, three weeks
+  before Spindl announced it was joining Coinbase, and the mobile SDKs have not
+  shipped since 2023.
 packages:
-  - language: javascript
-    registry: npm
-    name: "@spindl-xyz/attribution"
-    version: 1.8.1
-    url: https://www.npmjs.com/package/@spindl-xyz/attribution
-    install: npm install @spindl-xyz/attribution
-    repository: https://github.com/spindl-xyz/sdk
-    description: Spindl Web3 Attribution SDK (default) for browser and Node sessions.
-    license: MIT
-    official: true
-  - language: javascript
-    registry: npm
-    name: "@spindl-xyz/attribution-lite"
-    version: 1.8.1
-    url: https://www.npmjs.com/package/@spindl-xyz/attribution-lite
-    install: npm install @spindl-xyz/attribution-lite
-    description: Lightweight (Lite) build of the Spindl attribution SDK.
-    license: MIT
-    official: true
-  - language: swift
-    registry: swift-package-manager
-    name: SpindlSDK
-    url: https://github.com/spindl-xyz/spindl-ios
-    install: "Add Swift Package: https://github.com/spindl-xyz/spindl-ios (min v1.0.1)"
-    repository: https://github.com/spindl-xyz/spindl-ios
-    description: Spindl iOS (Swift) SDK, distributed via Swift Package Manager.
-    official: true
-  - language: kotlin
-    registry: maven
-    name: "xyz.spindl:sdk"
-    group: xyz.spindl
-    artifact: sdk
-    url: https://docs.spindl.xyz/spindl/techncial/android-sdk.md
-    install: "implementation 'xyz.spindl:sdk:<latest>'"
-    description: Spindl Android SDK, published under the xyz.spindl group.
-    official: true
+- language: javascript
+  registry: npm
+  name: "@spindl-xyz/attribution"
+  version: 1.8.1
+  published: '2025-01-09'
+  release_count: 20
+  url: https://www.npmjs.com/package/@spindl-xyz/attribution
+  install: npm install @spindl-xyz/attribution
+  repository: https://github.com/spindl-xyz/sdk
+  description: Spindl Web3 Attribution SDK (default) for browser and Node sessions.
+  license: MIT
+  official: true
+- language: javascript
+  registry: npm
+  name: "@spindl-xyz/attribution-lite"
+  version: 1.8.1
+  published: '2025-01-09'
+  release_count: 21
+  url: https://www.npmjs.com/package/@spindl-xyz/attribution-lite
+  install: npm install @spindl-xyz/attribution-lite
+  description: Lightweight (Lite) build of the Spindl attribution SDK.
+  license: MIT
+  official: true
+- language: javascript
+  registry: npm
+  name: "@spindl-xyz/embed-react"
+  version: 1.0.0
+  published: '2024-02-28'
+  release_count: 13
+  url: https://www.npmjs.com/package/@spindl-xyz/embed-react
+  install: npm i @spindl-xyz/embed-react
+  repository: https://github.com/spindl-xyz/spindl-react-embed
+  description: >-
+    Spindl React Embed library — the BannerEmbed component that renders a
+    Spindl ad unit as an iframe. Component surface captured in
+    components/spindl-components.yml.
+  license: MIT
+  official: true
+  note: >-
+    The linked repository github.com/spindl-xyz/spindl-react-embed returns 404
+    from the GitHub API — the package is published but its source repo is not
+    public.
+- language: javascript
+  registry: cdn
+  name: spindl attribution browser script
+  version: 1.8.1
+  published: '2025-01-09'
+  url: https://cdn.spindl.xyz/attribution-1-8-1.js
+  install: >-
+    <script async data-key="ADD_sdkKey_HERE" data-name="spindl-sdk"
+    integrity="sha512-tnVaWexFbVZtEVlUBUMiWPwusxycBB3aDONgxC2zjX4CE0Tleo0zoLyI/JA6svx9SumV3KHGtAiD1mDrR+TpPg=="
+    src="https://cdn.spindl.xyz/attribution-1-8-1.js" crossorigin="anonymous"></script>
+  official: true
+  note: >-
+    CDN distribution with no registry metadata endpoint. The version is pinned
+    in the URL itself (attribution-1-8-1.js) and Spindl publishes a Subresource
+    Integrity hash for it, so a consumer can tell exactly what they are
+    getting. `published` is the file's Last-Modified header
+    (Thu, 09 Jan 2025 23:29:03 GMT), which matches the npm 1.8.1 release.
+    attribution-lite-1-8-1.js is served from the same host; a probe for a
+    hypothetical 1.9.0 returns 403, i.e. no newer build is published.
+- language: swift
+  registry: swift-package-manager
+  name: SpindlSDK
+  version: 1.0.1
+  published: '2023-12-21'
+  url: https://github.com/spindl-xyz/spindl-ios
+  install: "Add Swift Package: https://github.com/spindl-xyz/spindl-ios (min v1.0.1)"
+  repository: https://github.com/spindl-xyz/spindl-ios
+  description: Spindl iOS (Swift) SDK, distributed via Swift Package Manager.
+  official: true
+  note: >-
+    Version read from the GitHub releases API (latest release 1.0.1, published
+    2023-12-21T19:13:02Z). Repository last pushed 2024-01-04. Swift Package
+    Manager has no central registry to query.
+- language: kotlin
+  registry: maven
+  name: "xyz.spindl:sdk"
+  group: xyz.spindl
+  artifact: sdk
+  version: 1.0.4
+  published: '2023-12-19'
+  release_count: 5
+  packaging: aar
+  url: https://central.sonatype.com/artifact/xyz.spindl/sdk
+  install: "implementation 'xyz.spindl:sdk:1.0.4'"
+  description: Spindl Android SDK, published to Maven Central under the xyz.spindl group.
+  official: true
+  note: >-
+    Version and date read from search.maven.org (latestVersion 1.0.4, timestamp
+    1703017513000 = 2023-12-19). Spindl's Android docs tell integrators to pick
+    "the highest version available" rather than naming a version.
+repositories:
+- url: https://github.com/spindl-xyz/spindl-ios
+  language: Swift
+  last_push: '2024-01-04'
+- url: https://github.com/spindl-xyz/sdk-examples
+  language: Kotlin
+  last_push: '2024-08-01'
+- url: https://github.com/spindl-xyz/gtm-tag-template
+  language: Smarty
+  last_push: '2024-08-19'
+  description: Google Tag Manager tag template for Spindl.
+staleness:
+  newest_release: '2025-01-09'
+  checked: '2026-08-13'
+  finding: >-
+    No first-party Spindl package has shipped a release in the 19 months to
+    2026-08-13, and the public GitHub org (3 public repos) has had no push
+    since 2024-08-19. Read alongside the HTTP 503 on the documented
+    Server-to-Server base api.spindl.xyz, this is a consistent abandonment
+    signal for the standalone Spindl developer surface; the Ads/embed surface
+    on e.spindlembed.com remains live.

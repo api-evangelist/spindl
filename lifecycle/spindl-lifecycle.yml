@@ -1,10 +1,14 @@
-generated: '2026-07-21'
-method: derived
-source: https://docs.spindl.xyz/spindl/techncial/api.md
+generated: '2026-08-13'
+method: searched
+source: https://blog.spindl.xyz/p/spindl-is-joining-coinbase
 versioning:
   scheme: uri-path
   current: v1
-  docs: https://docs.spindl.xyz/spindl/techncial/api.md
+  docs: https://docs.spindl.xyz/technical/api
+  notes: >-
+    All three surfaces are pinned at /v1 — api.spindl.xyz/v1,
+    e.spindlembed.com/v1 — and the events host spindl.link/events/server is
+    unversioned. No version-negotiation header, no dated version train.
 deprecation:
   policy_url: null
   sunset_header: false
@@ -12,7 +16,71 @@ sla:
   url: null
 status_page: null
 deprecated_operations: []
+ownership:
+  event: acquisition
+  acquirer: Coinbase
+  operates_as: product team inside Base
+  announced: '2025-01-31'
+  source: https://blog.spindl.xyz/p/spindl-is-joining-coinbase
+  statement_at_announcement: >-
+    "For existing advertisers and attribution clients, nothing will change in
+    the Spindl service" and "For existing publishers in the Spindl ads network,
+    nothing else will change in your integration or how your data is handled."
+  corroboration: >-
+    An unauthenticated GET to https://e.spindlembed.com/v1/render/test on
+    2026-08-13 returned HTTP 401 and set a cookie `cb_dm=…; Domain=coinbase.com`
+    alongside the spindlembed.com Cloudflare cookie — the ad surface is being
+    served from Coinbase infrastructure.
+surface_health:
+  checked: '2026-08-13'
+  hosts:
+  - host: api.spindl.xyz
+    status: 503
+    verdict: down
+    detail: >-
+      The documented Server-to-Server base URL returns HTTP 503 Service
+      Temporarily Unavailable from an AWS ELB (server: awselb/2.0) on every
+      path including its own root, across repeated requests to both backing
+      IPs. The Short Links API (listLinks, createLink) is therefore not
+      callable. No status page or incident notice exists to explain it.
+  - host: spindl.link
+    status: 400
+    verdict: live
+    detail: >-
+      POST /events/server without a key returns HTTP 400 "Missing API Key"
+      behind Cloudflare — the custom-events ingestion surface is up.
+  - host: e.spindlembed.com
+    status: 401
+    verdict: live
+    detail: >-
+      GET /v1/render/{publisher_id} without a key returns HTTP 401 with
+      `www-authenticate: API key is required` — the Ads API is up.
+  - host: docs.spindl.xyz
+    status: 200
+    verdict: live-but-relocated
+    detail: >-
+      The documentation moved off GitBook onto a Nextra (Next.js) site. Every
+      previously recorded docs URL under /spindl/techncial/... now returns 404;
+      content lives at /technical/... with no redirect from the old paths.
+      Captured in the apis.yml link properties and llms/spindl-llms.txt, both
+      of which were pointing at dead URLs before this pass.
 notes: >-
-  Spindl publishes no separate versioning/deprecation policy, SLA, or public
-  status page as of this pass. The API is versioned in the path (/v1/). No
-  StatusPage or Deprecation pointer emitted (nothing published to point to).
+  Spindl publishes no versioning policy document, no deprecation or sunset
+  policy, no SLA and no public status page (status.spindl.xyz does not
+  resolve). No StatusPage or Deprecation pointer is emitted — there is nothing
+  published to point to. The material lifecycle facts for this provider are the
+  January 2025 Coinbase acquisition, an undocumented docs migration that broke
+  every published deep link, a management API host that has been returning 503
+  with no notice, and first-party SDKs whose newest release is 2025-01-09.
+evidence:
+- url: https://blog.spindl.xyz/p/spindl-is-joining-coinbase
+  status: 200
+- url: https://api.spindl.xyz/v1/links
+  status: 503
+- url: https://docs.spindl.xyz/technical/api
+  status: 200
+- url: https://docs.spindl.xyz/spindl/techncial/api.md
+  status: 404
+- url: https://status.spindl.xyz/
+  status: 0
+  detail: DNS does not resolve

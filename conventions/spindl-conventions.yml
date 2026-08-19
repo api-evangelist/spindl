@@ -1,36 +1,125 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://docs.spindl.xyz/spindl/techncial/api.md
+source: https://docs.spindl.xyz/technical/api
+note: >-
+  Spindl runs three separate API surfaces that do NOT share conventions. They
+  use three different key headers, two different error envelopes, and three
+  different hosts. An agent must not carry assumptions from one to another.
+surfaces:
+- name: Server-to-Server management API
+  host: https://api.spindl.xyz/v1
+  auth_header: X-API-Key
+  error_envelope: custom-json
+  spec: openapi/spindl-short-links-api-openapi.yml
+  health: 'HTTP 503 as of 2026-08-13 — see lifecycle/spindl-lifecycle.yml'
+- name: Custom events ingestion
+  host: https://spindl.link/events/server
+  auth_header: X-API-Key
+  error_envelope: text-plain
+  spec: openapi/spindl-events-api-openapi.yml
+  health: live
+- name: Ads (embed) API
+  host: https://e.spindlembed.com/v1
+  auth_header: X-API-ACCESS-KEY
+  error_envelope: grpc-gateway
+  spec: openapi/spindl-ads-api-openapi.yml
+  health: live
 authentication:
   style: api-key
-  header: X-API-Key
-  notes: >-
-    Server-to-Server API key (distinct from client-side SDK key). Generated on
-    the Settings page in the Spindl app. Keys can be revoked from Settings.
-  docs: https://docs.spindl.xyz/spindl/your-spindl-app-setup.md
+  headers:
+  - header: X-API-Key
+    used_by: [management API, custom events ingestion]
+    notes: >-
+      Server-to-Server API key (distinct from the client-side SDK key).
+      Generated on the Settings page in the Spindl app; revocable from
+      Settings with the X button beside the token.
+  - header: X-API-ACCESS-KEY
+    used_by: [ads API]
+    notes: >-
+      Publisher API Token, generated on the Settings screen. Documented as a
+      secret that must not be shipped in public-facing code.
+  - header: null
+    used_by: [browser/mobile SDKs]
+    notes: >-
+      The SDKs take an SDK Key (data-key attribute / sdkKey config value),
+      which is a public client-side credential and is NOT interchangeable with
+      either server key.
+  docs: https://docs.spindl.xyz/your-spindl-app-setup
 idempotency:
   supported: false
   notes: >-
-    No idempotency-key header is documented. Custom events are ingested as
-    batched arrays; retrying a failed POST may duplicate events.
+    No idempotency-key header is documented on any surface. Custom events are
+    ingested as batched arrays; retrying a failed POST may duplicate events.
+    Ad impression tracking is keyed by the server-issued `impression_id`, which
+    de-duplicates by identity rather than by client-supplied key — it is not a
+    general idempotency contract.
 pagination:
   supported: false
-  notes: The list-links endpoint returns the full set sorted by createdAt descending.
+  notes: >-
+    listLinks returns the full set sorted by createdAt descending. The Ads
+    render endpoint uses a required `limit` query parameter to cap the number
+    of recommendations returned (documented as "usually 1"); there is no
+    cursor or offset.
 versioning:
   style: uri-path
   current: v1
+  notes: The events ingestion host (spindl.link/events/server) is unversioned.
 error_envelope:
-  shape: custom-json
-  fields: [statusCode, message]
+  management_api:
+    shape: custom-json
+    fields: [statusCode, message]
+    example:
+      statusCode: 404
+      message: link not found
+  ads_api:
+    shape: grpc-gateway
+    fields: [code, message, details]
+    example:
+      code: 16
+      message: API key is required
+      details: []
+    notes: >-
+      Numeric `code` is a gRPC status code, not an HTTP status (16 =
+      UNAUTHENTICATED, 5 = NOT_FOUND). Observed live on 2026-08-13.
+  events_ingestion:
+    shape: text-plain
+    notes: >-
+      An unauthenticated POST to spindl.link/events/server returns HTTP 400
+      with the plain-text body "Missing API Key" — not JSON.
   ref: errors/spindl-problem-types.yml
 identity_stitching:
   notes: >-
     Events and attribution identify users by either a wallet `address` or a
     `customerUserId` (e.g. email or internal user id). At least one is required
-    per event; supplying both improves identity stitching and attribution.
+    per event; supplying both improves identity stitching and attribution. The
+    Ads API targets on `address` alone.
 rate_limiting:
-  signaled: unknown
-  notes: No rate-limit headers or limits documented in the public API reference.
+  signaled: false
+  notes: >-
+    No rate-limit headers were returned on live unauthenticated probes of
+    either live host, and no limits are documented. See
+    rate-limits/spindl-rate-limits.yml, which does record published payload
+    size limits for custom events.
+events_and_exports:
+  webhooks: false
+  streaming: false
+  notes: >-
+    Spindl publishes no webhook or streaming surface — no AsyncAPI artifact is
+    emitted and no Webhooks pointer is wired. Bulk data leaves the platform as
+    a daily S3 dump (.csv/.parquet, files named {YYYY-MM-DD}.csv, delayed ~8
+    hours), delivered either by granting Spindl's IAM role
+    arn:aws:iam::475852047645:role/spindl-data-exports-role write access to
+    your bucket, or by handing Spindl read credentials for your own.
+    Documented at https://docs.spindl.xyz/technical/api/data-exports.
+cors:
+  notes: >-
+    Both live hosts answer preflight-relevant headers. spindl.link advertises
+    `access-control-allow-methods: GET, POST`; e.spindlembed.com advertises
+    `GET, POST, OPTIONS` and accepts Content-Type, X-API-Access-Key,
+    X-Internal-API-Key, X-API-Key and Authorization.
 hosts:
   management_api: https://api.spindl.xyz/v1
   events_ingestion: https://spindl.link/events/server
+  ads_api: https://e.spindlembed.com/v1
+  sdk_cdn: https://cdn.spindl.xyz
+  short_link_custom_domain_cname: custom-domains.spindl.click.

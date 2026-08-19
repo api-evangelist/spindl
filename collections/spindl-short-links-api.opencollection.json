@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spindl Server-to-Server Events Short Links API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Short Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all links for your organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spindl.xyz/v1/links",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all short (redirect) links for your organization, sorted by the time they were created, descending."
+        },
+        {
+          "info": {
+            "name": "Create a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spindl.xyz/v1/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new short link with Spindl tracking."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

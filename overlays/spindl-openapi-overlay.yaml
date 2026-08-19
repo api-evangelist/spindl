@@ -4,7 +4,7 @@ x-method: generated
 info:
   title: API Evangelist enhancements for Spindl Server-to-Server API
   version: 1.0.0
-extends: openapi/spindl-openapi.yml
+extends: openapi/_original/spindl-openapi.yml
 actions:
   - target: $.info
     update:

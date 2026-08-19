@@ -1,0 +1,125 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of every apis.yml + OpenAPI servers[] host
+note: >-
+  Every /.well-known/ path probed on every Spindl host missed. spindl.xyz and
+  docs.spindl.xyz return real 404s. api.spindl.xyz (the documented
+  Server-to-Server base) returns HTTP 503 from an AWS ELB on every path,
+  including its own root. e.spindlembed.com (the Ads host) returns a real 404
+  "404 page not found" on every path. spindl.link and app.spindl.xyz answer
+  HTTP 200 with an HTML single-page-app shell for EVERY /.well-known/* path,
+  including /openapi.json and /.well-known/agent-card.json — those are SPA
+  catch-alls, not documents, and are recorded as misses. NO WellKnown,
+  SecurityTxt or AgentCard pointer is emitted: nothing here is a served
+  document.
+documents:
+- host: https://spindl.xyz
+  path: /.well-known/security.txt
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://spindl.xyz
+  path: /.well-known/agent.json
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/security.txt
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://docs.spindl.xyz
+  path: /.well-known/agent.json
+  status: 404
+- host: https://api.spindl.xyz
+  path: /.well-known/security.txt
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/openid-configuration
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/oauth-authorization-server
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/api-catalog
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/ai-plugin.json
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/agent-card.json
+  status: 503
+- host: https://api.spindl.xyz
+  path: /.well-known/agent.json
+  status: 503
+- host: https://e.spindlembed.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://e.spindlembed.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://spindl.link
+  path: /.well-known/agent-card.json
+  status: 200
+  verdict: rejected
+  reason: SPA catch-all returns text/html for every path; not an AgentCard document.
+- host: https://spindl.link
+  path: /.well-known/agent.json
+  status: 200
+  verdict: rejected
+  reason: SPA catch-all returns text/html for every path.
+- host: https://app.spindl.xyz
+  path: /.well-known/security.txt
+  status: 200
+  verdict: rejected
+  reason: SPA catch-all returns text/html for every path.
+- host: https://app.spindl.xyz
+  path: /.well-known/agent-card.json
+  status: 200
+  verdict: rejected
+  reason: SPA catch-all returns text/html for every path.
+- host: https://app.spindl.xyz
+  path: /.well-known/agent.json
+  status: 200
+  verdict: rejected
+  reason: SPA catch-all returns text/html for every path.
+hits: 0

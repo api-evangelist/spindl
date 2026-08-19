@@ -1,0 +1,37 @@
+generated: '2026-08-13'
+method: probed
+source: https://docs.spindl.xyz/technical/api
+limit_count: 0
+note: >-
+  Spindl documents no rate limits on any of its three surfaces. The API
+  reference (docs.spindl.xyz/technical/api) covers only the API key, the
+  X-API-Key header and the 2xx/4xx/5xx error classes — there is no limits
+  section, no quota, and no documented 429 behaviour. Live unauthenticated
+  probes confirm no rate-limit headers are returned: POST
+  https://spindl.link/events/server answered HTTP 400 "Missing API Key" and GET
+  https://e.spindlembed.com/v1/render/{publisher_id} answered HTTP 401 with
+  `www-authenticate: API key is required`; neither response carried
+  X-RateLimit-*, RateLimit-* or Retry-After. The only published size limits are
+  payload constraints on custom events, recorded below as payload_limits rather
+  than as rate limits.
+limits: []
+response_headers:
+  observed: []
+  documented: []
+  exhaustion_status: undocumented
+payload_limits:
+- scope: custom event name
+  rule: 'minimum 3 and maximum 100 characters; alphanumeric plus `_ : -` and spaces'
+  source: https://docs.spindl.xyz/technical/api/custom-events-api
+- scope: custom event properties object
+  rule: maximum 16KB; individual keys and values cannot exceed 1,000 characters
+  source: https://docs.spindl.xyz/technical/api/custom-events-api
+evidence:
+- url: https://docs.spindl.xyz/technical/api
+  status: 200
+- url: https://spindl.link/events/server
+  status: 400
+  detail: 'unauthenticated POST; body "Missing API Key"; no rate-limit headers present'
+- url: https://e.spindlembed.com/v1/render/test
+  status: 401
+  detail: 'unauthenticated GET; www-authenticate: API key is required; no rate-limit headers present'

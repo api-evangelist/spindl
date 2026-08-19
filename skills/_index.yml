@@ -1,12 +1,19 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: generated
-source: openapi/spindl-openapi.yml
+source: openapi/
 skills:
-  - file: spindl-create-tracking-link.md
-    name: Create and list Spindl tracking links
-    api: openapi/spindl-openapi.yml
-    operations: [createLink, listLinks]
-  - file: spindl-send-custom-events.md
-    name: Send server-side custom events to Spindl
-    api: openapi/spindl-openapi.yml
-    operations: [sendCustomEvents]
+- file: spindl-create-tracking-link.md
+  name: Create and list Spindl tracking links
+  api: openapi/spindl-short-links-api-openapi.yml
+  operations: [createLink, listLinks]
+  note: >-
+    The host this skill calls (api.spindl.xyz) returned HTTP 503 on 2026-08-13
+    — see lifecycle/spindl-lifecycle.yml before relying on it.
+- file: spindl-send-custom-events.md
+  name: Send server-side custom events to Spindl
+  api: openapi/spindl-events-api-openapi.yml
+  operations: [sendCustomEvents]
+- file: spindl-serve-and-track-ads.md
+  name: Serve a Spindl ad unit and record the impression
+  api: openapi/spindl-ads-api-openapi.yml
+  operations: [fetchRecommendations, trackAdEvent, serveAdIframe]

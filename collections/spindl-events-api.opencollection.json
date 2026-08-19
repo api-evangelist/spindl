@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spindl Server-to-Server Events API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send custom events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spindl.xyz/v1/events/server",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Ingest one or more custom events server-side for more detailed attribution. Send an array of event objects. Either an `address` or a `customerUserId` is required per event to identify the user. Note: this operation is served from the events host `https://spindl.link`, not the management API host."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

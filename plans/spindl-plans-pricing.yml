@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: searched
+source: https://spindl.xyz/
+plan_count: 0
+public_pricing: false
+note: >-
+  Spindl publishes no pricing or plans page. https://spindl.xyz/pricing returns
+  HTTP 404 and the marketing site carries no pricing link — the only commercial
+  entry points on the homepage are a DeForm contact form
+  (https://app.deform.cc/form/794dd38b-9f92-4d95-889b-a7421dfd46f2/) and the
+  app sign-in at https://app.spindl.xyz. The Ads product explicitly gates
+  onboarding on a human step: publishers must "reach out to the Spindl team to
+  get your account approved as a Publisher" and are issued publisher_id and
+  placement_id by the team. Since the January 2025 Coinbase acquisition Spindl
+  operates as a product team inside Base, which makes a standalone public price
+  list less likely rather than more.
+plans: []
+evidence:
+- url: https://spindl.xyz/pricing
+  status: 404
+- url: https://spindl.xyz/
+  status: 200
+- url: https://docs.spindl.xyz/ads/start-here
+  status: 200

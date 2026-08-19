@@ -1,0 +1,352 @@
+{
+  "item": [
+    {
+      "id": "79cc546d-dde1-40fa-8c9e-7022c8f603b7",
+      "name": "Short Links",
+      "description": {
+        "content": "Redirect links mapping a Spindl link to a destination URL.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2e212c6c-036e-4a35-b5c7-d412cae177db",
+          "name": "Get all links for your organization",
+          "request": {
+            "name": "Get all links for your organization",
+            "description": {
+              "content": "Returns all short (redirect) links for your organization, sorted by the time they were created, descending.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f1bef6c9-06fd-4fa3-9a76-5cc0041a6f13",
+              "name": "A list of short links.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"links\": [\n    {\n      \"id\": \"dfec5988-5108-465c-be87-ce42039f572e\",\n      \"name\": \"Spindl Campaign - 2022 - Twitter\",\n      \"link\": \"https://spindl.link/abcd\",\n      \"redirectUrl\": \"https://demo.spindl.xyz/\",\n      \"createdAt\": \"2026-08-05T03:05:14.295Z\",\n      \"totalVisits\": 5153,\n      \"latestVisit\": \"1992-03-20T07:28:11.908Z\"\n    },\n    {\n      \"id\": \"dfec5988-5108-465c-be87-ce42039f572e\",\n      \"name\": \"Spindl Campaign - 2022 - Twitter\",\n      \"link\": \"https://spindl.link/abcd\",\n      \"redirectUrl\": \"https://demo.spindl.xyz/\",\n      \"createdAt\": \"2000-07-22T17:35:47.135Z\",\n      \"totalVisits\": 9081,\n      \"latestVisit\": \"1961-09-25T22:33:46.976Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7064f457-0874-4eb3-9fad-737e1110fa94",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"message\": \"link not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2560562e-6516-4a07-b06e-5490a53c0c59",
+          "name": "Create a link",
+          "request": {
+            "name": "Create a link",
+            "description": {
+              "content": "Create a new short link with Spindl tracking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"url\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3ade45d9-c5a7-434b-9680-caf393c1652b",
+              "name": "The created short link.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Winter Campaign - Twitter Post 1\",\n  \"url\": \"https://demo.spindl.xyz/\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"link\": {\n    \"id\": \"dfec5988-5108-465c-be87-ce42039f572e\",\n    \"name\": \"Spindl Campaign - 2022 - Twitter\",\n    \"link\": \"https://spindl.link/abcd\",\n    \"redirectUrl\": \"https://demo.spindl.xyz/\",\n    \"createdAt\": \"1949-04-07T06:23:51.662Z\",\n    \"totalVisits\": 3816,\n    \"latestVisit\": \"2025-01-14T19:31:56.436Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "903f3ff3-8422-43ff-8742-11386e0a991e",
+              "name": "Incorrect or incomplete request (e.g. a required parameter was omitted).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Winter Campaign - Twitter Post 1\",\n  \"url\": \"https://demo.spindl.xyz/\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"message\": \"link not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spindl.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "830247d3-781f-4e84-93af-b72b37fa52df",
+    "name": "Spindl Server-to-Server Events Short Links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Spindl's Server-to-Server API provides access to campaign and attribution management, short (redirect) links, server-side custom event ingestion, and daily data exports for Web3 growth analytics and onchain attribution. This OpenAPI description was generated by the API Evangelist enrichment pipeline from Spindl's published API reference documentation; endpoints, methods, parameters, and example payloads are transcribed from docs.spindl.xyz.\n\nContact Support:\n Name: Spindl\n Email: contact@spindl.xyz",
+      "type": "text/plain"
+    }
+  }
+}

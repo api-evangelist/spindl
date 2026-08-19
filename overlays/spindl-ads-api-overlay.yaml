@@ -1,0 +1,39 @@
+overlay: 1.0.0
+x-generated: '2026-08-13'
+x-method: generated
+info:
+  title: API Evangelist enhancements for the Spindl Ads (Embed) API
+  version: 1.0.0
+extends: openapi/spindl-ads-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: true
+    x-api-evangelist-category: onchain-advertising
+    x-authentication: authentication/spindl-authentication.yml
+    x-error-catalog: errors/spindl-problem-types.yml
+    x-conventions: conventions/spindl-conventions.yml
+    x-data-model: data-model/spindl-data-model.yml
+    x-components: components/spindl-components.yml
+- target: $.paths['/render/{publisher_id}'].get
+  update:
+    x-agent-note: >-
+      Read-only. Requires publisher_id, placement_id, address, limit and
+      country — limit and country are REQUIRED, which is unusual for a read.
+      An empty items[] is a normal "no ad available" result, not an error.
+- target: $.paths['/external/track'].post
+  update:
+    x-agent-note: >-
+      Write with no idempotency key. impression_id is server-issued by
+      fetchRecommendations; never synthesize one. Post exactly once per unit
+      actually rendered on screen.
+- target: $.paths['/serve'].get
+  update:
+    x-agent-note: >-
+      Unauthenticated by design — intended as an iframe src in a browser. Do
+      not attach the publisher API token to this call.
+- target: $.components.schemas.Error
+  update:
+    x-agent-note: >-
+      `code` is a gRPC status code, not an HTTP status. 16 = UNAUTHENTICATED,
+      5 = NOT_FOUND. Observed live 2026-08-13.

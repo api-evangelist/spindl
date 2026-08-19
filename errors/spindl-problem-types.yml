@@ -1,37 +1,100 @@
-generated: '2026-07-21'
-method: derived
-source: https://docs.spindl.xyz/spindl/techncial/api.md
+generated: '2026-08-13'
+method: searched
+source: https://docs.spindl.xyz/technical/api
 format: custom-json
-envelope:
+note: >-
+  Spindl uses three different error shapes across its three surfaces. None is
+  RFC 9457 application/problem+json. The management-API shape is documented;
+  the ads and events shapes were observed live on 2026-08-13.
+envelopes:
+- surface: Server-to-Server management API (api.spindl.xyz/v1)
+  shape: custom-json
   description: >-
     On error responses Spindl returns a JSON body with a numeric statusCode and
-    a human-readable message. This is NOT RFC 9457 application/problem+json.
+    a human-readable message.
   fields:
     statusCode: HTTP status code (integer)
     message: Human-readable error message (string)
   example:
     statusCode: 404
     message: link not found
+  source: https://docs.spindl.xyz/technical/api
+- surface: Ads (embed) API (e.spindlembed.com/v1)
+  shape: grpc-gateway
+  description: >-
+    grpc-gateway / Google API error model. `code` is a gRPC status code, NOT an
+    HTTP status — an HTTP 401 carries code 16 (UNAUTHENTICATED) and an HTTP 404
+    on a versioned path carries code 5 (NOT_FOUND). An agent that reads `code`
+    as an HTTP status will misclassify every error on this surface.
+  fields:
+    code: gRPC status code (integer)
+    message: Human-readable error message (string)
+    details: Array of detail objects (observed empty)
+  example:
+    code: 16
+    message: API key is required
+    details: []
+  source: 'live probe 2026-08-13: GET https://e.spindlembed.com/v1/render/test'
+- surface: Custom events ingestion (spindl.link/events/server)
+  shape: text-plain
+  description: >-
+    The events host returns a plain-text body, not JSON. An unauthenticated
+    POST returns HTTP 400 with the body "Missing API Key".
+  source: 'live probe 2026-08-13: POST https://spindl.link/events/server'
 classes:
-  - range: 2xx
-    meaning: Success.
-  - range: 4xx
-    meaning: Incorrect or incomplete request (e.g. a required parameter was omitted).
-  - range: 5xx
-    meaning: An error occurred on Spindl's servers.
+- range: 2xx
+  meaning: Success.
+- range: 4xx
+  meaning: Incorrect or incomplete requests (e.g. a required parameter was omitted).
+- range: 5xx
+  meaning: An error occurred on Spindl's servers.
 problems:
-  - status: 400
-    title: Bad request
-    detail: Incorrect or incomplete request; a required parameter was omitted or invalid.
-    source_operation: openapi/spindl-openapi.yml#createLink
-  - status: 401
-    title: Unauthorized
-    detail: Missing or invalid X-API-Key.
-    source_operation: openapi/spindl-openapi.yml#listLinks
-  - status: 404
-    title: Not found
-    detail: The requested resource (e.g. link) does not exist.
-    example_message: link not found
-  - status: 500
-    title: Server error
-    detail: An error occurred on Spindl's servers.
+- status: 400
+  title: Bad request
+  detail: Incorrect or incomplete request; a required parameter was omitted or invalid.
+  source_operation: openapi/spindl-short-links-api-openapi.yml#createLink
+- status: 400
+  title: Missing API Key
+  detail: >-
+    Returned by the events ingestion host when no X-API-Key header is present.
+    Note this surface answers a missing credential with 400, not 401.
+  body: Missing API Key
+  content_type: text/plain
+  source_operation: openapi/spindl-events-api-openapi.yml#sendCustomEvents
+  observed: '2026-08-13'
+- status: 401
+  title: Unauthorized
+  detail: Missing or invalid X-API-Key.
+  source_operation: openapi/spindl-short-links-api-openapi.yml#listLinks
+- status: 401
+  title: API key is required
+  detail: >-
+    Returned by the Ads API when the X-API-ACCESS-KEY header is absent.
+    Response carries `www-authenticate: API key is required` and body
+    {"code":16,"message":"API key is required","details":[]}.
+  grpc_code: 16
+  source_operation: openapi/spindl-ads-api-openapi.yml#fetchRecommendations
+  observed: '2026-08-13'
+- status: 404
+  title: Not found
+  detail: The requested resource (e.g. link) does not exist.
+  example_message: link not found
+- status: 404
+  title: Not Found (ads API)
+  detail: >-
+    Unknown versioned route on the Ads host; body
+    {"code":5,"message":"Not Found","details":[]}. Unversioned paths on the
+    same host return the plain-text Go default "404 page not found".
+  grpc_code: 5
+  observed: '2026-08-13'
+- status: 500
+  title: Server error
+  detail: An error occurred on Spindl's servers.
+- status: 503
+  title: Service Temporarily Unavailable
+  detail: >-
+    Returned by the AWS ELB fronting api.spindl.xyz on every path as of
+    2026-08-13, including the host root. Not a documented API error — an
+    availability condition on the management API. See
+    lifecycle/spindl-lifecycle.yml.
+  observed: '2026-08-13'

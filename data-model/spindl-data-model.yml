@@ -1,29 +1,120 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: derived
-source: openapi/spindl-openapi.yml
+source: openapi/ + https://docs.spindl.xyz/technical/api/data-exports
 entities:
-  - name: Link
-    description: A short (redirect) link mapping a Spindl link to a destination URL.
-    id_field: id
-    id_format: uuid
-    fields: [id, name, link, redirectUrl, createdAt, totalVisits, latestVisit]
-  - name: CustomEvent
-    description: A server-ingested attribution event tied to a user identity.
-    fields: [type, data.name, data.properties, identity.address, identity.customerUserId]
-  - name: Identity
-    description: >-
-      The user a CustomEvent is attributed to, resolved by wallet address
-      and/or a customerUserId.
-    fields: [address, customerUserId]
+- name: Link
+  description: A short (redirect) link mapping a Spindl link to a destination URL.
+  surface: management API
+  id_field: id
+  id_format: uuid
+  fields: [id, name, link, redirectUrl, createdAt, totalVisits, latestVisit]
+- name: CustomEvent
+  description: A server-ingested attribution event tied to a user identity.
+  surface: events ingestion
+  fields: [type, data.name, data.properties, identity.address, identity.customerUserId]
+- name: Identity
+  description: >-
+    The user a CustomEvent is attributed to, resolved by wallet address and/or
+    a customerUserId.
+  fields: [address, customerUserId]
+- name: Publisher
+  description: >-
+    An app or site approved by Spindl to show ads. Identified by a publisher_id
+    issued by the Spindl team; holds a Publisher API Token and a wallet address
+    for earnings.
+  surface: ads API
+  id_field: publisher_id
+  fields: [publisher_id, wallet_address]
+- name: Placement
+  description: >-
+    A named slot in a publisher's app where an ad is shown. Bound to a Creative
+    Type. A publisher may create as many as needed.
+  surface: ads API
+  id_field: placement_id
+  fields: [placement_id, creative_type]
+- name: Recommendation
+  description: >-
+    A single ad unit returned for a wallet at a placement, carrying its own
+    impressionId for tracking.
+  surface: ads API
+  id_field: id
+  fields: [id, impressionId, type, title, context.text, description, imageUrl, imageAltText, ctas]
+- name: AdEvent
+  description: An impression or click recorded against a Recommendation's impressionId.
+  surface: ads API
+  fields: [type, impression_id]
+- name: ExportRow
+  description: >-
+    One row in the daily S3 data export — the flattened join of event, session,
+    identity, browser, onchain and attribution data.
+  surface: data exports
+  fields:
+  - event_id
+  - event_name
+  - event_type
+  - event_time
+  - url
+  - url_params
+  - path_name
+  - session_id
+  - customer_user_id
+  - identity_wallet_address
+  - device_user_agent
+  - utm_medium
+  - utm_source
+  - utm_campaign
+  - utm_content
+  - utm_term
+  - referer
+  - chain_id
+  - tx_hash
+  - attribution_channel
+  - attribution_type
+  notes: >-
+    attribution_type is an enum (organic, external, …). Delivered daily as
+    {YYYY-MM-DD}.csv or .parquet, ~8 hours delayed, with a backfill in the
+    first file.
 relationships:
-  - from: CustomEvent
-    to: Identity
-    kind: belongs_to
-    via: identity
-  - from: Link
-    to: CustomEvent
-    kind: has_many
-    via: attribution
-    notes: >-
-      Derived/semantic: link visits generate downstream attribution events;
-      not a hard foreign key in the public API schema.
+- from: CustomEvent
+  to: Identity
+  kind: belongs_to
+  via: identity
+- from: Link
+  to: CustomEvent
+  kind: has_many
+  via: attribution
+  notes: >-
+    Derived/semantic: link visits generate downstream attribution events; not a
+    hard foreign key in the public API schema.
+- from: Publisher
+  to: Placement
+  kind: has_many
+  via: placement_id
+  notes: Documented — "you can create as many as you need".
+- from: Placement
+  to: Recommendation
+  kind: has_many
+  via: placement_id
+  notes: fetchRecommendations is scoped by publisher_id + placement_id.
+- from: Recommendation
+  to: AdEvent
+  kind: has_many
+  via: impressionId
+  notes: >-
+    The impressionId returned on a Recommendation is the join key posted back
+    as impression_id on trackAdEvent.
+- from: Recommendation
+  to: Identity
+  kind: belongs_to
+  via: address
+  notes: >-
+    Recommendations are targeted on a wallet address (or list of addresses)
+    passed as the `address` query parameter.
+- from: ExportRow
+  to: Identity
+  kind: belongs_to
+  via: identity_wallet_address
+- from: ExportRow
+  to: CustomEvent
+  kind: belongs_to
+  via: event_id
