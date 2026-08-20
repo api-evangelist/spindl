@@ -59,6 +59,8 @@ apis:
   humanURL: https://docs.spindl.xyz/technical/api/custom-events-api
   baseURL: https://api.spindl.xyz/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
