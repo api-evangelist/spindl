@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Spindl Server-to-Server Events API
   version: v1
@@ -58,15 +58,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: link not found
     CustomEvent:
       type: object
       required:
@@ -101,6 +92,15 @@ components:
             customerUserId:
               type: string
               description: A unique user id or identifier such as an email address.
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: link not found
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
