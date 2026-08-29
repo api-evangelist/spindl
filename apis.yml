@@ -15,6 +15,18 @@ description: >-
   it was joining Coinbase and now operates as a product team inside Base.
   Originally added to the API Evangelist network as a portfolio-lead stub, now
   enriched from its published developer documentation and live host probes.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
