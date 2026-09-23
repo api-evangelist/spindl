@@ -1,23 +1,26 @@
 {
   "provider": "spindl",
   "sources": [
-    "spindl-ads-api-openapi.yml",
-    "spindl-events-api-openapi.yml",
-    "spindl-short-links-api-openapi.yml"
+    "_ae-authored/spindl-openapi.yml",
+    "spindl-ads-api-openapi.yml"
   ],
   "outputs": [
-    "spindl-ads-api-openapi.yml",
     "spindl-events-api-openapi.yml",
-    "spindl-short-links-api-openapi.yml"
+    "spindl-short-links-api-openapi.yml",
+    "spindl-ads-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "spindl-ads-api-openapi.yml: previously refined output kept for 3 operation(s) no archived document covers (e.g. /external/track post, /render/{publisher_id} get, /serve get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
-    "spindl-ads-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "spindl-events-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "spindl-short-links-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "spindl-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "spindl-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "spindl-short-links-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

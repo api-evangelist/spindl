@@ -2,22 +2,19 @@ generated: '2026-08-13'
 method: derived
 source: openapi/
 status: candidate
-notes: >-
-  No official hosted or local Spindl MCP server exists. Searched the docs
-  (docs.spindl.xyz), the npm registry for the whole `spindl` term (only three
-  packages exist, all SDKs), the public GitHub org (3 repos, none MCP), and the
-  MCP registries. The tools below are a candidate list derived one-per-operation
+notes: No official hosted or local Spindl MCP server exists. Searched the docs (docs.spindl.xyz), the
+  npm registry for the whole `spindl` term (only three packages exist, all SDKs), the public GitHub org
+  (3 repos, none MCP), and the MCP registries. The tools below are a candidate list derived one-per-operation
   from Spindl's three documented API surfaces; nothing here is deployed.
 server:
   name: spindl
   transport: http
 deployment:
   mode: none
-  auth: api-key
   verified: derived
-  tools: 6
-  checked: '2026-08-13'
-  source: derived from openapi/ after searching docs, npm, GitHub and MCP registries
+  tools: 3
+  checked: '2026-08-12'
+  source: catalog MCP census
 tools:
 - name: list_links
   description: Get all short (redirect) links for your organization, sorted by created time descending.
@@ -28,20 +25,16 @@ tools:
   source_operation: openapi/spindl-short-links-api-openapi.yml#createLink
   note: Backing host api.spindl.xyz returned HTTP 503 on 2026-08-13.
 - name: send_custom_events
-  description: >-
-    Ingest one or more custom attribution events server-side (identified by
-    wallet address or customerUserId).
+  description: Ingest one or more custom attribution events server-side (identified by wallet address
+    or customerUserId).
   source_operation: openapi/spindl-events-api-openapi.yml#sendCustomEvents
 - name: fetch_ad_recommendations
-  description: >-
-    Fetch targeted onchain ad recommendations for a wallet address at a
-    publisher placement.
+  description: Fetch targeted onchain ad recommendations for a wallet address at a publisher placement.
   source_operation: openapi/spindl-ads-api-openapi.yml#fetchRecommendations
 - name: track_ad_event
   description: Record an impression or click against a returned recommendation's impressionId.
   source_operation: openapi/spindl-ads-api-openapi.yml#trackAdEvent
 - name: serve_ad_iframe
-  description: >-
-    Return a hosted HTML ad unit for direct iframe embedding. Unauthenticated
-    by design; browser-oriented rather than agent-oriented.
+  description: Return a hosted HTML ad unit for direct iframe embedding. Unauthenticated by design; browser-oriented
+    rather than agent-oriented.
   source_operation: openapi/spindl-ads-api-openapi.yml#serveAdIframe
