@@ -146,36 +146,6 @@ paths:
                 type: string
 components:
   schemas:
-    Error:
-      type: object
-      description: grpc-gateway / Google API error model observed live on this host (numeric `code`, `message`, `details[]`) — NOT the {statusCode,message} envelope used by the Server-to-Server API on api.spindl.xyz.
-      properties:
-        code:
-          type: integer
-          description: gRPC status code (16 = UNAUTHENTICATED, 5 = NOT_FOUND).
-          example: 16
-        message:
-          type: string
-          example: API key is required
-        details:
-          type: array
-          items:
-            type: object
-    AdEvent:
-      type: object
-      required:
-      - type
-      - impression_id
-      properties:
-        type:
-          type: string
-          description: Event type.
-          enum:
-          - impression
-          - click
-        impression_id:
-          type: string
-          description: The impressionId returned by fetchRecommendations.
     Recommendation:
       type: object
       properties:
@@ -216,6 +186,36 @@ components:
               href:
                 type: string
                 format: uri
+    AdEvent:
+      type: object
+      required:
+      - type
+      - impression_id
+      properties:
+        type:
+          type: string
+          description: Event type.
+          enum:
+          - impression
+          - click
+        impression_id:
+          type: string
+          description: The impressionId returned by fetchRecommendations.
+    Error:
+      type: object
+      description: grpc-gateway / Google API error model observed live on this host (numeric `code`, `message`, `details[]`) — NOT the {statusCode,message} envelope used by the Server-to-Server API on api.spindl.xyz.
+      properties:
+        code:
+          type: integer
+          description: gRPC status code (16 = UNAUTHENTICATED, 5 = NOT_FOUND).
+          example: 16
+        message:
+          type: string
+          example: API key is required
+        details:
+          type: array
+          items:
+            type: object
     RecommendationList:
       type: object
       properties:

@@ -91,15 +91,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: link not found
     Link:
       type: object
       properties:
@@ -128,6 +119,15 @@ components:
           - string
           - 'null'
           format: date-time
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: link not found
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
