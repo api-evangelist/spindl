@@ -186,21 +186,6 @@ components:
               href:
                 type: string
                 format: uri
-    AdEvent:
-      type: object
-      required:
-      - type
-      - impression_id
-      properties:
-        type:
-          type: string
-          description: Event type.
-          enum:
-          - impression
-          - click
-        impression_id:
-          type: string
-          description: The impressionId returned by fetchRecommendations.
     Error:
       type: object
       description: grpc-gateway / Google API error model observed live on this host (numeric `code`, `message`, `details[]`) — NOT the {statusCode,message} envelope used by the Server-to-Server API on api.spindl.xyz.
@@ -223,6 +208,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Recommendation'
+    AdEvent:
+      type: object
+      required:
+      - type
+      - impression_id
+      properties:
+        type:
+          type: string
+          description: Event type.
+          enum:
+          - impression
+          - click
+        impression_id:
+          type: string
+          description: The impressionId returned by fetchRecommendations.
   securitySchemes:
     PublisherApiKey:
       type: apiKey
