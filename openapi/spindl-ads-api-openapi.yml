@@ -146,6 +146,28 @@ paths:
                 type: string
 components:
   schemas:
+    RecommendationList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+    AdEvent:
+      type: object
+      required:
+      - type
+      - impression_id
+      properties:
+        type:
+          type: string
+          description: Event type.
+          enum:
+          - impression
+          - click
+        impression_id:
+          type: string
+          description: The impressionId returned by fetchRecommendations.
     Recommendation:
       type: object
       properties:
@@ -201,28 +223,6 @@ components:
           type: array
           items:
             type: object
-    RecommendationList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recommendation'
-    AdEvent:
-      type: object
-      required:
-      - type
-      - impression_id
-      properties:
-        type:
-          type: string
-          description: Event type.
-          enum:
-          - impression
-          - click
-        impression_id:
-          type: string
-          description: The impressionId returned by fetchRecommendations.
   securitySchemes:
     PublisherApiKey:
       type: apiKey
