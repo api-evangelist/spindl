@@ -59,6 +59,14 @@ x-enrichment:
   pass: local-v1
 tags:
 - Company
+- Web3
+- Attribution
+- Analytics
+- Marketing
+- Growth
+- SDK
+tags_raw:
+- Company
 - Crypto Web3
 - Attribution
 - Analytics
